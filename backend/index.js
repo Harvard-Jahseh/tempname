@@ -8,11 +8,16 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const request = require("request");
 const uuidv1 = require("uuid/v1");
+const path = require("path");
 
 const app = express();
 
+app.use(express.static(path.join(__dirname,"public")));
+app.set('views',__dirname + '/../frontend');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
 var knex = require('knex')({
   client: 'pg',
@@ -68,8 +73,15 @@ var verifyToken = function(req, res, next){
   });
 };
 
+app.get('/companysignup', function(req,res){
+  res.render('company_register.html');
+});
+
+app.get('/companylogin', function(req,res){
+  res.render('company_portal.html');
+});
 //User routing
-app.post("/usersignup", function(req, res) {
+app.post("/usersignupauth", function(req, res) {
   //create user, assign token, and send them to app
   //with help from link in verifyToken
   knex("users").select("*").where("email", req.body.email).then((response) => {
@@ -79,7 +91,7 @@ app.post("/usersignup", function(req, res) {
         email: req.body.email,
         password: hash,
         profile: null,
-        companylist: '{list:[]}'
+        companylist: JSON.stringify({list:[]})
         /**
         A "companylist" looks like:
         {
@@ -96,20 +108,19 @@ app.post("/usersignup", function(req, res) {
       })
     }
   })
-  res.send(req.body);
 })
 
-app.post("/companysignup", function(req, res) {
+app.post("/companysignupauth", function(req, res) {
   //create user, assign token, and send them to app
   //with help from link in verifyToken
   knex("companies").select("*").where("company", req.body.company).then((response) => {
     if (!response.length){
       let hash = bcrypt.hashSync(req.body.password,10);
-      knex("users").insert({
+      knex("companies").insert({
         company: req.body.company,
         password: hash,
         companykey: uuidv1(),
-        userlist: '{list:[]}'
+        userlist: JSON.stringify({list:[]})
         /**
         A "userlist" looks like:
         {
@@ -126,10 +137,9 @@ app.post("/companysignup", function(req, res) {
       })
     }
   })
-  res.send(req.body);
 })
 
-app.post('/userlogin', function(req, res, next) {
+app.post('/userloginauth', function(req, res, next) {
   // find user from table, assign token, then send them to app
   // with help from link in verifyToken
   console.log(req.body);
@@ -143,9 +153,7 @@ app.post('/userlogin', function(req, res, next) {
   });
 });
 
-app.post('/companylogin', function(req, res, next) {
-  // find user from table, assign token, then send them to app
-  // with help from link in verifyToken
+app.post('/companyloginauth', function(req, res, next) {
   console.log(req.body);
   knex("companies").select("*").where("company", req.body.company)
   .then(function(response){
@@ -175,7 +183,7 @@ app.post('/userapply/s2', function(req, res, next)
   //Stage 2: checking authentication: if it succeeds, add it to the company's database
   knex("companies").select("*").where("companykey",req.params['key'])
   .then(function(companyres){
-    knex.("users").select("*").where("email",req.body.email)
+    knex("users").select("*").where("email",req.body.email)
     .then(function(userres){
       if(bcrypt.compareSync(req.body.password, userres[0].password)){
         var token = jwt.sign({ id: req.body.company }, process.env.JWT_SECRET);
@@ -185,8 +193,8 @@ app.post('/userapply/s2', function(req, res, next)
         console.log(companylist);
         userlist.push(JSON.stringify({companyid: companyres[0].id, applied_at: new Date()}));
         companylist.push(JSON.stringify({userid: userres[0].id, applied_at: new Date()}));
-        knex.("companies").select("*").where("companykey",req.params['key']).update({userlist: JSON.stringify({list: userlist})});
-        knex.("users").select("*").where("email",req.body.email).update({companylist: JSON.stringify({list: companylist})});
+        knex("companies").select("*").where("companykey",req.params['key']).update({userlist: JSON.stringify({list: userlist})});
+        knex("users").select("*").where("email",req.body.email).update({companylist: JSON.stringify({list: companylist})});
         res.status(200).send({ auth: true, token: token });
       }else{
         return res.status(500).send({auth: false, message: 'Failed to authenticate token.'});
