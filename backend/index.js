@@ -6,6 +6,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const jwt = require('jsonwebtoken');
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
+const request = require("request");
 
 const app = express();
 
@@ -17,6 +18,7 @@ var knex = require('knex')({
   connection: process.env.DB_CONNECTION
 });
 
+knex.schema.dropTable('users');
 // initialize tables
 knex.schema.hasTable('users').then(function(exists){
   if(!exists) knex.schema.createTable('users', function(table){
@@ -50,35 +52,32 @@ var verifyToken = function(req, res, next){
   });
 };
 
-//ROUTING
-
 //User routing
 app.post("/signup", function(req, res) {
-  create user, assign token, and send them to app
-  with help from link in verifyToken
-  knex("users").select("*").where("email", req.body.email).then((response) => {
+  //create user, assign token, and send them to app
+  //with help from link in verifyToken
+  knex("users").select("*").where("email", req.query.email).then((response) => {
     if (!response.length){
+      let hash = bcrypt.hashSync(req.query['password'],10);
       knex("users").insert({
-        email: req.body['email'],
-        password: bcrypt.hashSync(req.body.password)
+        email: req.query['email'],
+        password: hash
       }).then(function() {
-        var token = jwt.sign({ id: req.body.email }, process.env.JWT_SECRET);
+        var token = jwt.sign({ id: req.query.email }, process.env.JWT_SECRET);
         res.status(200).send({ auth: true, token: token });
       })
-    } else {
-      return res.status(500).send({ auth: 'false', error: 'That email is already taken'});
     }
   })
-  res.send(req.body);
+  res.send(req.query);
 })
 
 app.post('/login', function(req, res, next) {
   // find user from table, assign token, then send them to app
   // with help from link in verifyToken
-  knex("users").select("*").where("email", req.body.email)
+  knex("users").select("*").where("email", req.query.email)
   .then(function(response){
-    if(bcrypt.compareSync(req.body.password, response[0].password)){
-      var token = jwt.sign({ id: req.body.email }, process.env.JWT_SECRET);
+    if(bcrypt.compareSync(req.query.password, response[0].password)){
+      var token = jwt.sign({ id: req.query.email }, process.env.JWT_SECRET);
       res.status(200).send({ auth: true, token: token });
     }
     else return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
