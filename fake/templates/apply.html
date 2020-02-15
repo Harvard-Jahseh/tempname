@@ -8,7 +8,19 @@
     integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" 
     crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script></script>
+    <script type="text/javascript">
+        $('#myForm').on('submit',function () {
+            $.ajax({
+                url: 'apply.html',
+                cache: false,
+                type: 'POST',
+                data : $('#myForm').serialize(),
+                success: function(json) {
+                    alert('all done');
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <h1 style="text-align: center;">Apply:</h1>
@@ -103,7 +115,7 @@
                 I choose not to self-identify.
             </label>
         </fieldset>
-        <input type="submit" class="pure-button" value="Submit">
+        <input type="submit" class="pure-button" value="Submit" onsubmit="post_data">
     </form>
 </body>
 </html>

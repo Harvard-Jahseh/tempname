@@ -1,4 +1,19 @@
 from flask import Flask, render_template, redirect, request, url_for, g, session
+import mysql.connector
+
+inclusivedb = mysql.connector.connect (
+    host="localhost",
+    auth_plugin='mysql_native_password',
+    user="root",
+    password="harvardjahseh"
+)
+
+cursor = inclusivedb.cursor()
+
+cursor.execute("CREATE DATABASE peopleDatabase")
+
+for x in cursor:
+  print(x)
 
 app = Flask(__name__)
 
@@ -15,7 +30,8 @@ def apply():
         if (race[-1] == ""): race = race[:-1]
         try:
             otherRace = request.form["other_race"]
-            race.append(otherRace)
+            if(otherRace != ""):
+                race.append(otherRace)
         except:
             pass
 
