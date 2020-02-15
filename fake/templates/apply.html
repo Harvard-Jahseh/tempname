@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>business.com</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" 
+    integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" 
+    crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script></script>
+</head>
+<body>
+    <h1 style="text-align: center;">Apply:</h1>
+    <h2 style="text-align: center;">Fill with incluapp: <a href="#">
+        <img width=56 height=56 align="middle" alt="incluappLogo" src="https://i.imgur.com/Fz9t8z4.jpg">
+    </a></h2> 
+    <form class="pure-form-stacked" method="POST" id="myForm" name="myForm">
+        <fieldset required>
+            <legend>Please answer this obligatory diversity questionairre:</legend>
+            <label for="white" class="pure-checkbox">
+                <input name="race" id="white" type="checkbox" value="White"> White
+            </label>
+            <label for="black" class="pure-checkbox">
+                <input name="race" id="black" type="checkbox" value="Black or African American"> Black or African American
+            </label>
+            <label for="hispanic" class="pure-checkbox">
+                <input name="race" id="hispanic" type="checkbox" value="Hispanic"> Hispanic
+            </label>
+            <label for="asian" class="pure-checkbox">
+                <input name="race" id="asian" type="checkbox" value="Asian"> Asian
+            </label>
+            <label for="islander" class="pure-checkbox">
+                <input name="race" id="islander" type="checkbox" value="Hawaiian or Pacific Islander"> Hawaiian or Pacific Islander
+            </label>
+            <label for="native" class="pure-checkbox">
+                <input name="race" id="native" type="checkbox" value="Native American or Alaska Native"> Native American or Alaska Native
+            </label>
+            <div class="pure-control-group">
+                <label for="other_race" class="pure-text">Other, Enter Below:</label>
+                <input name="other_race" id="other_race" type="text" placeholder="Other:">
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Please type/select your gender:</legend>
+            <input name="gender" type="text" list="gender" id="gender_selector" required>
+            <datalist id="gender" required>
+                <option value="Male"></option>
+                <option value="Female"></option>
+                <option value="Gender Neutral"></option>
+                <option value="Non-Conforming"></option>
+                <option value="Decline to Answer"></option>
+            </datalist>
+        </fieldset>
+        <fieldset>
+            <legend>Please enter the following information regarding employment eligibility:</legend>
+            <label for="legally_authorized">Are you legally authorized to work in the U.S.?</label>
+            <select name="legally_authorized" id="legally_authorized" required>
+                <option></option>
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+            <label for="require_sponsorship">Will you, now or in the future, require sponsorship for employment in the U.S.?</label>
+            <select name="require_sponsorship" id="require_sponsorship" required>
+                <option></option>
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+            <label for="submit_verification">Can you, after employment, submit verification of both your identity and authorization to work in the U.S.?</label>
+            <select name="submit_verification" id="submit_verification" required>
+                <option></option>
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+        </fieldset>
+        <fieldset>
+            <legend>Please indicate your veteran status:</legend>
+            <label for="yes_veteran" class="pure-radio">
+                <input id="yes_veteran" type="radio" name="veteran_radio" value="YES" required>
+                I am a protected veteran.
+            </label>
+            <label for="no_veteran" class="pure-radio">
+                <input id="no_veteran" type="radio" name="veteran_radio" value="NO" required>
+                I am not a protected veteran.
+            </label>
+            <label for="decline_veteran" class="pure-radio">
+                <input id="decline_veteran" type="radio" name="veteran_radio" value="Decline to answer" required>
+                I choose not to self-identify.
+            </label>
+        </fieldset>
+        <fieldset>
+            <legend>Please indicate your disability status:</legend>
+            <label for="yes_disability" class="pure-radio">
+                <input id="yes_disability" type="radio" name="disability_radio" value="One or more" required>
+                YES, I have a disability.
+            </label>
+            <label for="no_disability" class="pure-radio">
+                <input id="no_disability" type="radio" name="disability_radio" value="None" required>
+                NO, I do not have a disability.
+            </label>
+            <label for="decline_disability" class="pure-radio">
+                <input id="decline_disability" type="radio" name="disability_radio" value="Decline to answer" required>
+                I choose not to self-identify.
+            </label>
+        </fieldset>
+        <input type="submit" class="pure-button" value="Submit">
+    </form>
+</body>
+</html>
