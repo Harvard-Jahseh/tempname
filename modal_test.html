@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+/* The Modal (background) */
+input[type=text] {
+  background-color: rgb(201, 201, 201);
+  color: black;
+  border: 0;
+}
+input[type=text]:hover {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  border: 0;
+}
+input[type=text]:focus {
+  background-color: rgb(255, 255, 255);
+  color: black;
+  border: 0;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  margin: auto;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  align-content: center;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.open-form-modal {
+  background-color: #3B8EA5; /* Green */
+  border: 5px;
+  border-color: white;
+  border-radius: 4px;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  transition-duration: 0.4s;
+}
+
+.open-form-modal:hover {
+  background-color:white;
+  border-color: #3B8EA5;
+  border-width: 5px ;
+  color: #3B8EA5;
+  
+}
+
+.wrapper{
+  text-align: center;
+  margin: 20%;
+}
+
+.animated-down {
+   animation: fade-in-down 0.6s;
+   animation-delay: 0.3s;
+   animation-fill-mode: both;
+}
+@keyframes down {
+   0% {
+   transform: translateY(-1000px);
+   opacity: 0%;
+   }
+   100% {
+   transform: translateY(0);
+   opacity: 100%;
+   }
+}
+
+</style>
+</head>
+
+<script>
+  var myModal = new Modal({
+    content: 'Howdy',
+    maxWidth: 600
+});
+`</pre>
+
+### Public Methods 
+
+Now that we have our `Modal` object, and its configurable, how about adding a public method? The first thing a developer is going to want to do with a modal is open it up, so let's make it happen. 
+
+```javascript
+// Create an immediately invoked functional expression to wrap our code
+(function() {
+
+  // Define our constructor
+  this.Modal = function() {
+    ...
+  }
+
+  // Public Methods
+
+  Modal.prototype.open = function() {
+    // open code goes here
+  }
+
+  // Private Methods
+
+  // Utility method to extend defaults with user options
+  function extendDefaults(source, properties) {
+    ...
+  }
+
+}());
+</script>
+<body>
+<div class="wrapper">
+<h2>Incluapp.js</h2>
+
+
+<!-- Trigger/Open The Modal -->
+<button class="open-form-modal animated-down" id="myBtn">Open Modal</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <!-- <span class="close">&times;</span> -->
+    <form action="/sendform" method="PUT"> 
+      <!-- PUT or POST -->
+      <form class="pure-form-stacked" method="POST" id="myForm" name="myForm">
+          <fieldset required>
+              <legend>Please answer this obligatory diversity questionairre:</legend>
+              <label for="white" class="pure-checkbox">
+                  <input name="race" id="white" type="checkbox" value="White"> White
+              </label><br>
+              <label for="black" class="pure-checkbox">
+                  <input name="race" id="black" type="checkbox" value="Black or African American"> Black or African American
+              </label><br>
+              <label for="hispanic" class="pure-checkbox">
+                  <input name="race" id="hispanic" type="checkbox" value="Hispanic"> Hispanic
+              </label><br>
+              <label for="asian" class="pure-checkbox">
+                  <input name="race" id="asian" type="checkbox" value="Asian"> Asian
+              </label><br>
+              <label for="islander" class="pure-checkbox">
+                  <input name="race" id="islander" type="checkbox" value="Hawaiian or Pacific Islander"> Hawaiian or Pacific Islander
+              </label><br>
+              <label for="native" class="pure-checkbox">
+                  <input name="race" id="native" type="checkbox" value="Native American or Alaska Native"> Native American or Alaska Native
+              </label><br>
+              <div class="pure-control-group">
+                  <label for="other_race" class="pure-text">Other, Enter Below:</label>
+                  <input name="other_race" id="other_race" type="text" placeholder="Other:">
+              </div>
+          </fieldset>
+          <fieldset>
+              <legend>Please type/select your gender:</legend>
+              <input name="gender" type="text" list="gender" id="gender_selector" required>
+              <datalist id="gender" required>
+                  <option value="Male"></option>
+                  <option value="Female"></option>
+                  <option value="Gender Neutral"></option>
+                  <option value="Non-Conforming"></option>
+                  <option value="Decline to Answer"></option>
+              </datalist>
+          </fieldset>
+          <fieldset>
+              <legend>Please enter the following information regarding employment eligibility:</legend>
+              <label for="legally_authorized">Are you legally authorized to work in the U.S.?</label>
+              <select name="legally_authorized" id="legally_authorized" required>
+                  <option></option>
+                  <option>Yes</option>
+                  <option>No</option>
+              </select>
+              <label for="require_sponsorship">Will you, now or in the future, require sponsorship for employment in the U.S.?</label>
+              <select name="require_sponsorship" id="require_sponsorship" required>
+                  <option></option>
+                  <option>Yes</option>
+                  <option>No</option>
+              </select>
+              <label for="submit_verification">Can you, after employment, submit verification of both your identity and authorization to work in the U.S.?</label>
+              <select name="submit_verification" id="submit_verification" required>
+                  <option></option>
+                  <option>Yes</option>
+                  <option>No</option>
+              </select>
+          </fieldset>
+          <fieldset>
+              <legend>Please indicate your veteran status:</legend>
+              <label for="yes_veteran" class="pure-radio">
+                  <input id="yes_veteran" type="radio" name="veteran_radio" value="YES" required>
+                  I am a protected veteran.
+              </label>
+              <label for="no_veteran" class="pure-radio">
+                  <input id="no_veteran" type="radio" name="veteran_radio" value="NO" required>
+                  I am not a protected veteran.
+              </label>
+              <label for="decline_veteran" class="pure-radio">
+                  <input id="decline_veteran" type="radio" name="veteran_radio" value="Decline to answer" required>
+                  I choose not to self-identify.
+              </label>
+          </fieldset>
+          <fieldset>
+              <legend>Please indicate your disability status:</legend>
+              <label for="yes_disability" class="pure-radio">
+                  <input id="yes_disability" type="radio" name="disability_radio" value="One or more" required>
+                  YES, I have a disability.
+              </label>
+              <label for="no_disability" class="pure-radio">
+                  <input id="no_disability" type="radio" name="disability_radio" value="None" required>
+                  NO, I do not have a disability.
+              </label>
+              <label for="decline_disability" class="pure-radio">
+                  <input id="decline_disability" type="radio" name="disability_radio" value="Decline to answer" required>
+                  I choose not to self-identify.
+              </label>
+          </fieldset>
+          <input type="submit" class="pure-button" value="Submit">
+      </form>
+    </form>
+    <span class="close"> </span>
+
+  </div>
+  <script>
+    function changeText(element) 
+    {
+      if (element.id == "fname")
+      {
+        document.getElementById('initfname').innerHTML = element.value;
+      }
+      else if (element.id == "lname")
+      {
+        document.getElementById('initlname').innerHTML = element.value;
+      }
+      
+    }
+  </script>
+
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+</body>
+</html>

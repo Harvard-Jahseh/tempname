@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $("button").click(function()
+            {
+                $.post("broh", 
+                {email:login_info.email, password:login_info.password}, 
+                alert(document.getElementById("email").value + "\n" + document.getElementById("password").value));
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="wrapper"> 
+        <input id="email" type="text" onkeyup=changeText(this)></input>
+        <input id="password" type="password" onkeyup=changeText(this)></input>
+        <button>Send an HTTP POST request</button>
+<h2>Username: </h2><h2 id="initemail"> username</h2><br>
+<h2>Password: </h2><h2 id="initpassword"> password</h2>
+<script>
+    var login_info = {email:document.getElementById("email").value, 
+                    password:document.getElementById("password").value};
+    function changeText(element) 
+    {
+        if (element.id == "email")
+        {
+        document.getElementById('initemail').innerHTML = element.value;
+        login_info.email = element.value;
+        }
+        else if (element.id == "password")
+        {
+        document.getElementById('initpassword').innerHTML = element.value;
+        login_info.password = element.value;
+        }
+        
+    }
+</script>
+</div>
+<style>
+    .wrapper
+    {
+        text-align: center;
+    }
+</style>
+</body>
+</html>
